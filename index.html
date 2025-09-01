@@ -38,8 +38,7 @@
     <div class="container mx-auto px-4 sm:px-6 lg:px-8 animate-fade-in">
       <h1 id="hero-heading" class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-4 tracking-tight">Free Gas Geyser Site Inspection</h1>
       <p class="text-sm sm:text-base md:text-lg lg:text-xl mb-6 max-w-xl mx-auto">Say goodbye to cold showers! The Gas Company offers affordable, energy-saving hot water solutions. Book a <b>free</b> site inspection, and our qualified technicians will assess your home to determine whether a gas geyser can be safely and compliantly installed. Enjoy same-day installation and a hassle-free hot water upgrade!</p>
-<button class="cta-btn inline-block text-white" id="whatspp-btn"> Book on WhatsApp </button>
-</div>
+<button class="cta-btn inline-block text-white" id="call-btn">Call Us Now</btn></div>
   </section>
 
   <!-- Purpose -->
@@ -48,7 +47,8 @@
       <h2 id="purpose-heading" class="text-xl sm:text-2xl md:text-3xl font-bold mb-4 text-gray-800">Why Choose Us?</h2>
       <div class="section-divider"></div>
       <p class="text-gray-600 text-sm sm:text-base md:text-lg max-w-3xl mx-auto mb-6">As Gauteng's only gas lifestyle destination since 1947, The Gas Company delivers <strong>uninterrupted</strong> hot water with our expert gas geyser solutions. Say goodbye to power failures, confusing billing, and unreliable service. We offer same-day installations, 3G telemetry to monitor your gas usage, and over 5,000 compliant installations across South Africa. Your home is your castle, and we ensure clean, hassle-free setups with ongoing support. Choose us for affordable, reliable gas geysers and a partnership that lasts.</p>
-<button class="cta-btn inline-block text-white" id="whatspp-bttn"> Book on WhatsApp </button>
+<button class="cta-btn inline-block text-white" id="call-bttn">Call Us Now</button>
+
     </div>
   </section>
 
@@ -553,7 +553,8 @@
     <div class="container mx-auto px-4 sm:px-6 lg:px-8">
       <h2 class="text-xl sm:text-2xl md:text-3xl font-bold mb-4 text-gray-800">Ready for uninterrupted hot water?</h2>
       <div class="section-divider"></div>
- <button class="cta-btn inline-block text-white" id="whatspp-button"> Book on WhatsApp </button>   
+<button class="cta-btn inline-block text-white" id="call-button">Call Us Now</button>
+   
 
 </div>
   </section>
@@ -567,44 +568,26 @@
   </footer>
 
   <!-- Scripts -->
-   <!-- WhatsApp US Now Button 1 -->
+   <!-- Call Us Now Button 1 -->
    <script>
-const whatsappBtn = document.getElementById('whatspp-btn');
-whatsappBtn.addEventListener('click', function() {
-const phoneNumber = '27673447891';
-const message = "Hi, I'd like to book a FREE site visit.";
-const encodedMessage = encodeURIComponent(message);
-const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
-window.open(whatsappUrl, '_blank');
-});
-
+  document.getElementById('call-btn').addEventListener('click', function() {
+    window.location.href = 'tel:+27100206317';
+  });
 </script>
-   <!-- WhatsApp US Now Button 2 -->
+   <!-- Call us Now Button 2 -->
 
 <script>
-const whatsappBttn = document.getElementById('whatspp-bttn');
-whatsappBttn.addEventListener('click', function() {
-const phoneNumber = '27673447891';
-const message = "Hi, I'd like to book a FREE site visit.";
-const encodedMessage = encodeURIComponent(message);
-const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
-window.open(whatsappUrl, '_blank');
-});
-
+  document.getElementById('call-bttn').addEventListener('click', function() {
+    window.location.href = 'tel:+27100206317';
+  });
 </script>
-   <!-- WhatsApp US Now Button 3 -->
+   <!-- Call us Now Button 3 -->
 
 
 <script>
-const whatsappButton = document.getElementById('whatspp-button');
-whatsappButton.addEventListener('click', function() {
-const phoneNumber = '27673447891';
-const message = "Hi, I'd like to book a FREE site visit.";
-const encodedMessage = encodeURIComponent(message);
-const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
-window.open(whatsappUrl, '_blank');
-});
-
+  document.getElementById('call-button').addEventListener('click', function() {
+    window.location.href = 'tel:+27100206317';
+  });
 </script>
 
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -612,24 +595,3 @@ window.open(whatsappUrl, '_blank');
   <script src="scripts-v2.js"></script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
