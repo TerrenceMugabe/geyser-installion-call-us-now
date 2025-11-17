@@ -1,15 +1,14 @@
-// FAQ Toggle
+// FAQ Toggle (click to expand/collapse)
 document.querySelectorAll('.faq-item').forEach(item => {
   item.addEventListener('click', () => item.classList.toggle('active'));
 });
 
-// MODALS – Open (Product modals, Battery/Fan modals, Book Now popup)
+// MODALS – Open any modal (products, battery/fan, Book Now popup)
 document.querySelectorAll('[data-modal]').forEach(btn => {
   btn.addEventListener('click', e => {
     e.preventDefault();
     const modal = document.getElementById(btn.dataset.modal);
     if (modal) {
-      // Close any open modal first
       document.querySelectorAll('.modal.active').forEach(m => m.classList.remove('active'));
       modal.classList.add('active');
       document.body.style.overflow = 'hidden';
@@ -17,14 +16,13 @@ document.querySelectorAll('[data-modal]').forEach(btn => {
   });
 });
 
-// MODALS – Close with ×, background click, or Escape key
+// MODALS – Close with ×, background click, or Escape
 document.addEventListener('click', e => {
   if (e.target.classList.contains('modal') || e.target.classList.contains('modal-close')) {
     e.target.closest('.modal')?.classList.remove('active');
     document.body.style.overflow = 'auto';
   }
 });
-
 document.addEventListener('keydown', e => {
   if (e.key === 'Escape') {
     document.querySelectorAll('.modal.active').forEach(m => {
@@ -39,10 +37,12 @@ document.querySelector('.back-to-top')?.addEventListener('click', () => {
   window.scrollTo({ top: 0, behavior: 'smooth' });
 });
 
-// PRODUCT CAROUSEL – 5 full cards, ALL 100% clickable
+// CAROUSELS – Product & FAQ (now beautiful on mobile!)
 $(document).ready(function () {
+
+  // PRODUCT CAROUSEL – 5 full clickable cards on desktop
   $('.product-carousel').slick({
-    slidesToShow: 4,
+    slidesToShow: 5,
     slidesToScroll: 1,
     autoplay: true,
     autoplaySpeed: 3000,
@@ -56,32 +56,48 @@ $(document).ready(function () {
       { breakpoint: 1280, settings: { slidesToShow: 4 } },
       { breakpoint: 1024, settings: { slidesToShow: 3 } },
       { breakpoint: 768,  settings: { slidesToShow: 2 } },
-      { breakpoint: 480,  settings: { 
-        slidesToShow: 1,
-        centerMode: true,
-        centerPadding: '15%',
-        dots: false
-      }}
+      { breakpoint: 480,  settings: { slidesToShow: 1, centerMode: true, centerPadding: '15%', dots: false } }
     ]
   });
 
-  // FAQ carousel – only on desktop/tablet
-  if (window.innerWidth >= 769) {
-    $('.faq-container').slick({
-      slidesToShow: 4,
-      slidesToScroll: 1,
-      autoplay: true,
-      autoplaySpeed: 3000,
-      arrows: true,
-      dots: true,
-      centerMode: true,
-      variableWidth: true,
-      responsive: [
-        { breakpoint: 1024, settings: { slidesToShow: 3 } },
-        { breakpoint: 768,  settings: { slidesToShow: 2 } }
-      ]
-    });
-  }
+  // FAQ CAROUSEL – Perfect on mobile, tablet & desktop
+  $('.faq-container').slick({
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 3500,
+    arrows: true,
+    dots: true,
+    mobileFirst: true,
+    adaptiveHeight: true,
+    responsive: [
+      {
+        breakpoint: 640,
+        settings: {
+          slidesToShow: 2,
+          centerMode: true,
+          centerPadding: '10px'
+        }
+      },
+      {
+        breakpoint: 768,
+        settings: {
+          slidesToShow: 3,
+          centerMode: true,
+          variableWidth: true
+        }
+      },
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 4,
+          centerMode: true,
+          variableWidth: true
+        }
+      }
+    ]
+  });
+
 });
 
 // Calendly Embed
@@ -107,4 +123,3 @@ $(document).ready(function () {
   };
 })(window, "https://cal.gascompany.co.za/embed/embed.js", "init");
 Cal("init", "installation-site-visits", { origin: "https://cal.gascompany.co.za" });
-
