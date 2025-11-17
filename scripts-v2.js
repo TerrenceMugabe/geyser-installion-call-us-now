@@ -42,7 +42,7 @@ document.querySelector('.back-to-top')?.addEventListener('click', () => {
 // PRODUCT CAROUSEL – 5 full cards, ALL 100% clickable
 $(document).ready(function () {
   $('.product-carousel').slick({
-    slidesToShow: 5,
+    slidesToShow: 4,
     slidesToScroll: 1,
     autoplay: true,
     autoplaySpeed: 3000,
@@ -107,3 +107,4 @@ $(document).ready(function () {
   };
 })(window, "https://cal.gascompany.co.za/embed/embed.js", "init");
 Cal("init", "installation-site-visits", { origin: "https://cal.gascompany.co.za" });
+
