@@ -1,113 +1,90 @@
-// FAQ toggle (unchanged – works perfectly)
+// FAQ Toggle
 document.querySelectorAll('.faq-item').forEach(item => {
-  item.addEventListener('click', () => {
-    item.classList.toggle('active');
-  });
+  item.addEventListener('click', () => item.classList.toggle('active'));
 });
 
-// ==================== FIXED MODAL SYSTEM ====================
-// Works for: Battery/Fan modals, ALL product modals (including TGC 12L & 16L), and Book Now popup
+// MODALS – Open (Product modals, Battery/Fan modals, Book Now popup)
 document.querySelectorAll('[data-modal]').forEach(btn => {
-  btn.addEventListener('click', function(e) {
+  btn.addEventListener('click', e => {
     e.preventDefault();
-    e.stopPropagation();
-
-    const modalId = this.getAttribute('data-modal');
-    const targetModal = document.getElementById(modalId);
-
-    if (!targetModal) {
-      console.error('Modal not found:', modalId);
-      return;
+    const modal = document.getElementById(btn.dataset.modal);
+    if (modal) {
+      // Close any open modal first
+      document.querySelectorAll('.modal.active').forEach(m => m.classList.remove('active'));
+      modal.classList.add('active');
+      document.body.style.overflow = 'hidden';
     }
-
-    // Close any currently open modal first (prevents overlap)
-    document.querySelectorAll('.modal.active').forEach(m => m.classList.remove('active'));
-
-    // Open the requested modal
-    targetModal.classList.add('active');
-    document.body.style.overflow = 'hidden'; // Stop background scroll
   });
 });
 
-// Close buttons (×) – works on ALL modals including cta-popup
-document.querySelectorAll('.modal-close').forEach(btn => {
-  btn.addEventListener('click', function() {
-    this.closest('.modal').classList.remove('active');
-    document.body.style.overflow = 'auto';
-  });
-});
-
-// Close when clicking the dark background (but NOT content)
-window.addEventListener('click', function(e) {
-  if (e.target.classList.contains('modal') && e.target.classList.contains('active')) {
-    e.target.classList.remove('active');
+// MODALS – Close with ×, background click, or Escape key
+document.addEventListener('click', e => {
+  if (e.target.classList.contains('modal') || e.target.classList.contains('modal-close')) {
+    e.target.closest('.modal')?.classList.remove('active');
     document.body.style.overflow = 'auto';
   }
 });
 
-// Close with Escape key
-document.addEventListener('keydown', function(e) {
+document.addEventListener('keydown', e => {
   if (e.key === 'Escape') {
-    document.querySelectorAll('.modal.active').forEach(modal => {
-      modal.classList.remove('active');
+    document.querySelectorAll('.modal.active').forEach(m => {
+      m.classList.remove('active');
+      document.body.style.overflow = 'auto';
     });
-    document.body.style.overflow = 'auto';
   }
 });
 
-// Back to top
+// Back to Top
 document.querySelector('.back-to-top')?.addEventListener('click', () => {
   window.scrollTo({ top: 0, behavior: 'smooth' });
 });
 
-// ==================== CAROUSELS (unchanged & working) ====================
-$(document).ready(function() {
+// PRODUCT CAROUSEL – 5 full cards, ALL 100% clickable
+$(document).ready(function () {
   $('.product-carousel').slick({
-    slidesToShow: 3,
+    slidesToShow: 5,
     slidesToScroll: 1,
     autoplay: true,
     autoplaySpeed: 3000,
     arrows: true,
     dots: true,
-    centerMode: true,
-    variableWidth: true,
+    centerMode: false,
+    variableWidth: false,
+    infinite: true,
+    speed: 500,
     responsive: [
+      { breakpoint: 1280, settings: { slidesToShow: 4 } },
       { breakpoint: 1024, settings: { slidesToShow: 3 } },
       { breakpoint: 768,  settings: { slidesToShow: 2 } },
-      { breakpoint: 480,  settings: { slidesToShow: 1, dots: false } }
+      { breakpoint: 480,  settings: { 
+        slidesToShow: 1,
+        centerMode: true,
+        centerPadding: '15%',
+        dots: false
+      }}
     ]
   });
 
-  // FAQ Carousel only on desktop
-  function initFaqCarousel() {
-    const $faq = $('.faq-container');
-    if (window.innerWidth >= 769) {
-      if (!$faq.hasClass('slick-initialized')) {
-        $faq.slick({
-          slidesToShow: 4,
-          slidesToScroll: 1,
-          autoplay: true,
-          autoplaySpeed: 3000,
-          arrows: true,
-          dots: true,
-          centerMode: true,
-          variableWidth: true,
-          responsive: [
-            { breakpoint: 1024, settings: { slidesToShow: 3 } },
-            { breakpoint: 768,  settings: { slidesToShow: 2 } }
-          ]
-        });
-      }
-    } else {
-      if ($faq.hasClass('slick-initialized')) $faq.slick('unslick');
-    }
+  // FAQ carousel – only on desktop/tablet
+  if (window.innerWidth >= 769) {
+    $('.faq-container').slick({
+      slidesToShow: 4,
+      slidesToScroll: 1,
+      autoplay: true,
+      autoplaySpeed: 3000,
+      arrows: true,
+      dots: true,
+      centerMode: true,
+      variableWidth: true,
+      responsive: [
+        { breakpoint: 1024, settings: { slidesToShow: 3 } },
+        { breakpoint: 768,  settings: { slidesToShow: 2 } }
+      ]
+    });
   }
-
-  initFaqCarousel();
-  $(window).resize(() => initFaqCarousel());
 });
 
-// Calendly (unchanged)
+// Calendly Embed
 (function (C, A, L) {
   let p = function (a, ar) { a.q.push(ar); };
   let d = C.document;
@@ -115,8 +92,7 @@ $(document).ready(function() {
     let cal = C.Cal;
     let ar = arguments;
     if (!cal.loaded) {
-      cal.ns = {};
-      cal.q = cal.q || [];
+      cal.ns = {}; cal.q = cal.q || [];
       d.head.appendChild(d.createElement("script")).src = A;
       cal.loaded = true;
     }
@@ -124,11 +100,7 @@ $(document).ready(function() {
       const api = function () { p(api, arguments); };
       const namespace = ar[1];
       api.q = api.q || [];
-      if (typeof namespace === "string") {
-        cal.ns[namespace] = cal.ns[namespace] || api;
-        p(cal.ns[namespace], ar);
-        p(cal, ["initNamespace", namespace]);
-      } else p(cal, ar);
+      typeof namespace === "string" ? (cal.ns[namespace] = cal.ns[namespace] || api, p(cal.ns[namespace], ar), p(cal, ["initNamespace", namespace])) : p(cal, ar);
       return;
     }
     p(cal, ar);
